@@ -88,8 +88,6 @@ export default class Tabbie {
 
       this[symbols.gc] = setInterval(this::gc, GC_INTERVAL);
 
-
-
       document.addEventListener('visibilitychange', () => {
         if (!document.hidden) this::setAsMain();
       });
