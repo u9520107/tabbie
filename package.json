@@ -4,7 +4,14 @@
   "description": "Cross-tab task coordination and syncing",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js test",
+    "test-server": "node ./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js test-server",
+    "coverage": "node ./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js coverage",
+    "eslint": "node ./node_modules/eslint/bin/eslint.js src test gulpfile.js config.js",
+    "dist": "node ./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js dist",
+    "build": "node ./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js build",
+    "watch": "node ./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js watch",
+    "gulp": "node ./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js"
   },
   "repository": {
     "type": "git",
@@ -25,9 +32,8 @@
     "babel-plugin-transform-runtime": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-0": "^6.5.0",
-    "babel-runtime": "^6.9.2",
     "chai": "^3.5.0",
-    "eslint": "^3.0.0",
+    "eslint": "^2.9.0",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.10.0",
     "eslint-plugin-jsx-a11y": "^1.5.3",
@@ -39,9 +45,18 @@
     "gulp-mocha": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "json-loader": "^0.5.4",
+    "phantomjs-prebuilt": "^2.1.7",
+    "react": "^15.2.0",
+    "react-dom": "^15.2.0",
     "source-map-support": "^0.4.1",
     "through2": "^2.0.1",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "yargs": "^4.7.1"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.9.2",
+    "component-emitter": "^1.2.1",
+    "uuid": "^2.0.2"
   }
 }
