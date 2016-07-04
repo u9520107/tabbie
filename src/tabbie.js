@@ -12,6 +12,7 @@ const symbols = {
   beatRegex: Symbol(),
   beatKey: Symbol(),
   mainTabKey: Symbol(),
+  eventRegex: Symbol(),
 };
 
 
@@ -68,7 +69,9 @@ async function fightForMain(originalMainTabId) {
   }
 }
 
-
+/**
+ * @class Tabbie
+ */
 export default class Tabbie {
   constructor(
     prefix = 'tabbie',
@@ -80,6 +83,7 @@ export default class Tabbie {
     this[symbols.beatKey] = `${prefix}-beat-${this.id}`;
     this[symbols.beatRegex] = new RegExp(`^${prefix}-beat-`);
     this[symbols.mainTabKey] = `${prefix}-main-tab-id`;
+    this[symbols.eventRegex] = new RegExp(`^${prefix}-event-`);
 
     if (this.isEnabled) {
       // setup heartbeat;
@@ -93,12 +97,24 @@ export default class Tabbie {
       });
       window.addEventListener('storage', async e => {
         if (e.key === this[symbols.mainTabKey]) {
-          this.emit('mainTabIdChanged', e.newValue);
-        } else if (this[symbols.beatRegex].test(e.key) && e.newValue === null) {
+          this[symbols.emitter].emit('mainTabIdChanged', e.newValue);
+        } else if (
+          this[symbols.beatRegex].test(e.key) &&
+          (e.newValue === null || e.newValue === '')
+        ) {
           const mainTabId = await this.getMainTabId();
           if (e.key.replace(this[symbols.beatRegex], '') === mainTabId) {
             // main tab closed itself, fight to be the main tab
             this::fightForMain(mainTabId);
+          }
+        } else if (
+          this[symbols.eventRegex].test(e.key) &&
+          e.newValue !== null && e.newValue !== ''
+        ) {
+          const payload = JSON.parse(e.newValue);
+          const [id, event, ...args] = payload;
+          if (id !== this.id) { // ie fires storage event on original
+            this[symbols.emitter].emit(event, ...args);
           }
         }
       });
@@ -124,12 +140,16 @@ export default class Tabbie {
     return this[symbols.id];
   }
 
+  /**
+   * @function
+   * @return {Promise} - Resolves to current main tab id
+   */
   async getMainTabId() {
     const mainTabId = localStorage.getItem(this[symbols.mainTabKey]);
     if (mainTabId) return mainTabId;
 
     return new Promise(resolve => {
-      this.on('mainTabIdChanged', resolve);
+      this.once('mainTabIdChanged', resolve);
     });
   }
 
@@ -149,8 +169,8 @@ export default class Tabbie {
     if (this.isEnabled) {
       // emit to other tabs via localStorage event
       const id = uuid.v4();
-      const key = `tabbie-event-${id}`;
-      const payload = [event, ...args];
+      const key = `${this.prefix}-event-${id}`;
+      const payload = [this.id, event, ...args];
       localStorage.setItem(key, JSON.stringify(payload));
       localStorage.removeItem(key);
     }
