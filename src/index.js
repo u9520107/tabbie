@@ -1,4 +1,4 @@
-import Tabbie from './tabbie';
+import Tabbie from './lib/tabbie';
 
 const tabbie = new Tabbie();
 

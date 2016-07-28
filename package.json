@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.9.2",
-    "component-emitter": "^1.2.1",
+    "loganberry": "^0.9.1",
     "uuid": "^2.0.2"
   }
 }

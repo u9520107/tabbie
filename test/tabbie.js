@@ -1,7 +1,7 @@
 /* global describe before after it */
 
 import { expect } from 'chai';
-import Tabbie from '../src/tabbie';
+import Tabbie from '../src/lib/tabbie';
 
 describe('tabbie', async () => {
   it('is a function', () => {

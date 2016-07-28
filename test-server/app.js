@@ -18,7 +18,7 @@ tabbie.on('mainTabIdChanged', async (id) => {
 });
 
 tabbie.on('check', async (id) => {
-  tabbie.emit('response', id, `${tabbie.id} - ${await tabbie.getMainTabId()}`);
+  tabbie.send('response', id, `${tabbie.id} - ${await tabbie.getMainTabId()}`);
 });
 
 tabbie.on('response', (id, message) => {
@@ -30,7 +30,7 @@ tabbie.on('response', (id, message) => {
 
 window.addEventListener('load', () => {
   document.querySelector('#test').addEventListener('click', () => {
-    tabbie.emit('check', tabbie.id);
+    tabbie.send('check', tabbie.id);
   });
   boardEl = document.querySelector('#board');
 });
