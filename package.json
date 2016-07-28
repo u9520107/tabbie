@@ -1,8 +1,8 @@
 {
   "name": "tabbie",
-  "version": "0.1.0",
-  "description": "Cross-tab task coordination and syncing",
-  "main": "index.js",
+  "version": "0.8.0",
+  "description": "Main tab determination and cross-tab event sending",
+  "main": "./build/index.js",
   "scripts": {
     "test": "node ./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js test",
     "test-server": "node ./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js test-server",
