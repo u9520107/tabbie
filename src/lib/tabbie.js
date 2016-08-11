@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 import Emitter from './emitter';
-import SymbolMap from 'loganberry/build/lib/symbol-map';
+import SymbolMap from 'data-types/symbol-map';
 import Loganberry from 'loganberry';
 import { sleep } from './utils';
 
